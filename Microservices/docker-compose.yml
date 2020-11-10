@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  active:
+    image: masstransit/activemq
+    container_name: activemq
+    ports:
+      - 8161:8161
+      - 61616:61616
+
+  queueconsumer:
+    image: ${DOCKER_REGISTRY-}queueconsumer
+    container_name: queueconsumer
+    build:
+      context: .
+      dockerfile: QueueConsumer/Dockerfile
+    ports:
+      - 5000:80
+    depends_on:
+      - "active"
+     
+  queuepublisher:
+    image: ${DOCKER_REGISTRY-}queuepublisher
+    container_name: queuepublisher
+    build:
+      context: .
+      dockerfile: QueuePublisher/Dockerfile
+    ports:
+      - 5100:80
+    depends_on:
+      - "active"
