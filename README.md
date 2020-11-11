@@ -8,8 +8,7 @@
     hostname: activemq
     ports:
       - 8161:8161
-      - 61616:61616
-	  
+      - 61616:61616	  
   rabbit:
     image: masstransit/rabbitmq
     container_name: rabbitmq
